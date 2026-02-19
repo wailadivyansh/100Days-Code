@@ -1,20 +1,29 @@
-//Write a program to find the sum of digits of a number.
+int maxSubarraySumCircular(int* nums, int numsSize) {
 
-#include <stdio.h>
+    if (0 == numsSize) return 0;
 
-int main() {
-    int num, sum = 0, remainder;
+    int sum = 0;
 
-    printf("Enter a number: ");
-    scanf("%d", &num);
+    int curr_min_sum = 0;
+    int min_sum = nums[0];
 
-    while (num != 0) {
-        remainder = num % 10;   
-        sum += remainder;       
-        num /= 10;              
+    int curr_sum = 0;
+    int max_sum = nums[0];
+    for (int i = 0; i < numsSize; ++i) {
+        curr_sum += nums[i];
+        if (curr_sum > max_sum) max_sum = curr_sum;
+        if (curr_sum < 0) curr_sum = 0;
+
+        curr_min_sum += nums[i];
+        if (curr_min_sum < min_sum) min_sum = curr_min_sum;
+        if (curr_min_sum > 0) curr_min_sum = 0;
+
+        sum += nums[i];
     }
 
-    printf("Sum of digits = %d\n", sum);
+    int tmp = sum - min_sum;
+    if (min_sum != sum && tmp > max_sum) max_sum = tmp;
 
-    return 0;
+    return max_sum;
+
 }
