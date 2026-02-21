@@ -1,25 +1,41 @@
-//Write a program to swap the first and last digit of a number.
 #include <stdio.h>
-#include <math.h>
+#include <stdlib.h>
+
+// Define structure
+struct Node {
+    int data;
+    struct Node* next;
+};
 
 int main() {
-    int num, first, last, digits, swappedNum;
+    int n, i, value;
+    struct Node *head = NULL, *temp = NULL, *newNode = NULL;
 
-    printf("Enter a number: ");
-    scanf("%d", &num);
-    digits = (int)log10(num) + 1;
-    first = num / pow(10, digits - 1); 
-    last = num % 10;                   
+    scanf("%d", &n);
 
+    for(i = 0; i < n; i++) {
+        scanf("%d", &value);
 
-    if (digits == 1) {
-        printf("Swapped number = %d\n", num);
-        return 0;
+        // Allocate memory
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = value;
+        newNode->next = NULL;
+
+        if(head == NULL) {
+            head = newNode;
+            temp = newNode;
+        } else {
+            temp->next = newNode;
+            temp = newNode;
+        }
     }
 
-    swappedNum = last * pow(10, digits - 1) + (num % (int)pow(10, digits - 1) / 10) * 10 + first;
-
-    printf("Number after swapping first and last digits = %d\n", swappedNum);
+    // Traverse and print
+    temp = head;
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
 
     return 0;
 }
